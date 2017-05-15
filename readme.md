@@ -1,7 +1,6 @@
 # Installation
-Python 3/pip
-pip install PyCrypto
-
+* Python 3
+* pip install PyCrypto
 # Credits
 ## Python
---* [PyCrypto](http://pythonhosted.org/pycrypto/)
+* [PyCrypto](http://pythonhosted.org/pycrypto/)
