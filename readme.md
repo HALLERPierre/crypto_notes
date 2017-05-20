@@ -1,12 +1,23 @@
 # Installation
-* Python 3
-* pip install PyCrypto
-* pip install flask
+## Python 3
+```shell
+pip install PyCrypto
+pip install flask
+```
+## Node
+```shell
+npm install
+```
 # Execution
-> Run flask server :
-```python
+* Run flask server :
+```shell
 python crypto/app.py
 ```
+* Run javascript bundler :
+```shell
+npm run dev
+```
+
 # Credits
 ## Python
 * [PyCrypto](http://pythonhosted.org/pycrypto/)
