@@ -40,8 +40,7 @@ def getIV(path='iv_file'):
 	if not Path(path).is_file():
 		generateIV()
 	with open(path, 'rb') as ivFile:
-		iv = ivFile.read()
-	return iv
+		return ivFile.read()
 
 """
 Get AES cipher, allow to encrypt, decrypt

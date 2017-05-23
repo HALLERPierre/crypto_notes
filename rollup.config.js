@@ -1,10 +1,12 @@
 import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import replace from 'rollup-plugin-replace'
 
 export default {
     entry: 'src/js/main.js',
-    format: 'cjs',
+    format: 'iife',
+    sourceMap: 'inline',
     plugins: [
         resolve(),
         babel({exclude: 'node_modules/**'}),
@@ -14,7 +16,10 @@ export default {
     // relative to the current directory, or the name
     // of a module in node_modules
             'node_modules/react-dom/index.js': [ 'ReactDOM' ]
-        }})
+        }}),
+        replace({
+            'process.env.NODE_ENV': JSON.stringify('development')
+        })
     ],
     dest: 'public/js/app.js'
 }
