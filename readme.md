@@ -3,6 +3,7 @@
 ```shell
 pip install PyCrypto
 pip install flask
+pip install flask-cors
 ```
 ## Node
 ```shell
