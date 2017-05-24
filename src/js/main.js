@@ -6,6 +6,32 @@ const PORT_PYTHON = 52525;
 const URL = 'http://127.0.0.1:' + PORT_PYTHON;
 
 
+class Main extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {connected: false, title: "", text: "", edit:"false"};
+		this.connect = this.connect.bind(this);
+		this.displayNote = this.displayNote.bind(this);
+	}
+	connect (res) {
+		this.setState({connected: true});
+	}
+	displayNote(title, text) {
+		this.setState({title: title, text: note, edit:"true"});
+	}
+	render () {
+		if (!this.state.connected)
+			return (<Welcome name="User" onConnect={this.connect}/>)
+		else {
+			return (
+				<div>
+					<WriteNote title={this.state.title} text={this.state.text} edit={this.state.edit}/>
+					<ListAllNotes displayCallback={this.displayNote}/>
+				</div>
+			)
+		}
+	}
+}
 
 function Welcome(props) {
 	return (
@@ -15,7 +41,7 @@ function Welcome(props) {
 			<label>Username </label>: <input className="text"/>
 			<br/> 
 			<label>Password </label>: <input className="text"/>
-			<h2>Click here to begin : <button onClick={connectToApi}>CONNECT</button></h2>
+			<h2>Click here to begin : <button onClick={() => connectToApi(props.onConnect)}>CONNECT</button></h2>
 		</div>
 	)
 }
@@ -23,27 +49,28 @@ function Welcome(props) {
 class WriteNote extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {value: ''};
+		this.state = {text: props.text, title: props.title, edit: props.edit};
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleAreaChange = this.handleAreaChange.bind(this);
 	}
 	handleInputChange(event) {
-   		this.setState({valueInput: event.target.value});
+   		this.setState({title: event.target.value});
   	}
 	handleAreaChange(event) {
-   		this.setState({valueArea: event.target.value});
+   		this.setState({text: event.target.value});
   	}
   	render () {
+  		let titleDisable = this.edit;
   		return (
   			<div>
   				<h1>Write a note here :</h1>
-  				<label>Title</label> : <input className="text" onChange={this.handleInputChange}/><br/>
-  				<textarea id="note" rows="4" cols="50" placeholder="My bitcoin wallet" onChange={this.handleAreaChange}></textarea>
+  				<label>Title</label> : <input className="text" defaultValue={this.state.title} onChange={this.handleInputChange} disabled={titleDisable}/>
   				<br/>
-  				<button onClick={() => saveNote(this.state.valueInput, this.state.valueArea)}>SAVE</button>
+  				<textarea id="note" defaultValue={this.state.text} rows="4" cols="50" 
+  					placeholder="My bitcoin wallet" onChange={this.handleAreaChange}>
+  				</textarea>
   				<br/>
-  				<br/>
-  				<button onClick={seeAllNotes}>See my notes</button>
+  				<button onClick={() => saveNote(this.state.title, this.state.text)}>SAVE</button>
   			</div>
   		)
   	}
@@ -52,10 +79,22 @@ class WriteNote extends React.Component {
 class ListAllNotes extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {notes: [], displayCallback:props.displayCallback };
+		this.componentDidMount = this.componentDidMount.bind(this);
+	}
+	componentDidMount() {
+		let this_ = this;
+	    requestApi('/api/getAllTitles', 'GET', {}, function (res) {
+	    	let titles = JSON.parse(res);
+	    	this_.setState({notes: titles})
+	    })
 	}
 	render () {
 		let allNotes = [];
-		allNotes = this.props.notes.map((title, index) => <ListNote key={index} title={title}/>);
+		if (this.state.notes.length < 1){
+			return (<p>"Loading"</p>);
+		}
+		allNotes = this.state.notes.map((title, index) => <ListNote key={index} title={title} displayCallback={this.state.displayCallback} />);
 		return (
 			<div className="listNotes">
 				<h1>All your notes :</h1>
@@ -66,17 +105,15 @@ class ListAllNotes extends React.Component {
 }
 
 function ListNote(props) {
+	let func = props.displayCallback;
 	return (
-		<li><a href="javascript:void(0)" onClick={() => showNote(props.title)}>{props.title}</a></li>
+		<li><a href="javascript:void(0)" onClick={() => func(props.title)}>{props.title}</a></li>
 	)
 }
 
-function connectToApi() {
+function connectToApi(callback) {
 	requestApi('/api/connect', 'GET', {}, function(res) {
-		ReactDOM.render(
-			<WriteNote name="User"/>,
-			document.getElementById('root')
-		);
+		callback(res);
 	});
 }
 
@@ -86,14 +123,11 @@ function saveNote(title, note) {
 	});
 }
 
-function seeAllNotes() {
-	requestApi('/api/getAllTitles', 'GET', {}, function (res) {
-		let titles = JSON.parse(res);
-		ReactDOM.render(
-			<ListAllNotes notes={titles} />,
-			document.getElementById('root')
-		);
-	})
+function showNote(title, callback) {
+	requestApi('/api/decrypt/' + title, 'GET', {}, function(res) {
+		let text = res;
+		callback(title, text);
+	});
 }
 
 function requestApi(route, method, body, callback) {
@@ -125,6 +159,6 @@ function requestApi(route, method, body, callback) {
 }
 
 ReactDOM.render(
-	<Welcome name="User"/>,
+	<Main />,
 	document.getElementById('root')
 );

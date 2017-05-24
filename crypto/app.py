@@ -47,13 +47,14 @@ def decrypt(fileName):
 	#See if notes should be stored or use another method
 	path = 'notes/' + fileName
 	with open(path, 'rb') as cryptedFile:
+		print(path, file=sys.stderr)
 		msg = cryptedFile.read()
 	#TODO : get this message IV
 	try:
 		iv = crypto.getIV()
 		cipher = crypto.getCipher(key, iv)
 		decryptedMsg = crypto.decryptMessage(cipher, iv, msg)
-		resp = getResponse(decryptMessage, 200)
+		resp = getResponse(decryptedMsg, 200)
 	except Exception:
 		resp = getResponse("Fail during decryp message", 500)
 	return resp
