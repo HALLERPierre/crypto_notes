@@ -5,6 +5,7 @@ pip install PyCrypto
 pip install flask
 pip install flask-cors
 ```
+You will also need to have `python-dev` installed
 ## Node
 ```shell
 npm install
