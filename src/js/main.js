@@ -9,15 +9,24 @@ const URL = 'http://127.0.0.1:' + PORT_PYTHON;
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {connected: false, title: "", text: "", edit:"false"};
+		this.state = {connected: false, title: "", text: "", edit:"false", currentState:0};
 		this.connect = this.connect.bind(this);
 		this.displayNote = this.displayNote.bind(this);
+		this.newNote = this.newNote.bind(this);
 	}
 	connect (res) {
 		this.setState({connected: true});
 	}
-	displayNote(title, text) {
-		this.setState({title: title, text: note, edit:"true"});
+	displayNote(title) {
+		let _this = this;
+		loadNote(title, function(title, text) {
+			let nextState = _this.state.currentState + 1;
+			_this.setState({title: title, text: text, edit:"true", currentState:nextState});
+		});
+	}
+	newNote() {
+		let nextState = this.state.currentState + 1;
+		this.setState({title:"", text:"", edit:"false", currentState:nextState});
 	}
 	render () {
 		if (!this.state.connected)
@@ -25,7 +34,8 @@ class Main extends React.Component {
 		else {
 			return (
 				<div>
-					<WriteNote title={this.state.title} text={this.state.text} edit={this.state.edit}/>
+					<WriteNote title={this.state.title} text={this.state.text} edit={this.state.edit} currentState={this.state.currentState} />
+					<button onClick={this.newNote}>New note</button>
 					<ListAllNotes displayCallback={this.displayNote}/>
 				</div>
 			)
@@ -49,7 +59,7 @@ function Welcome(props) {
 class WriteNote extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {text: props.text, title: props.title, edit: props.edit};
+		this.state = {text: props.text, title: props.title, edit: props.edit, currentState: props.currentState};
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleAreaChange = this.handleAreaChange.bind(this);
 	}
@@ -60,13 +70,17 @@ class WriteNote extends React.Component {
    		this.setState({text: event.target.value});
   	}
   	render () {
-  		let titleDisable = this.edit;
+  		let titleDisable = this.props.edit === "true";
+  		let refreshState = this.state.currentState != this.props.currentState;
+  		if (refreshState) {
+  			this.state = this.props;
+  		}
   		return (
   			<div>
   				<h1>Write a note here :</h1>
-  				<label>Title</label> : <input className="text" defaultValue={this.state.title} onChange={this.handleInputChange} disabled={titleDisable}/>
+  				<label>Title</label> : <input className="text" value={this.state.title} onChange={this.handleInputChange} disabled={titleDisable}/>
   				<br/>
-  				<textarea id="note" defaultValue={this.state.text} rows="4" cols="50" 
+  				<textarea id="note" value={this.state.text} rows="4" cols="50" 
   					placeholder="My bitcoin wallet" onChange={this.handleAreaChange}>
   				</textarea>
   				<br/>
@@ -105,9 +119,8 @@ class ListAllNotes extends React.Component {
 }
 
 function ListNote(props) {
-	let func = props.displayCallback;
 	return (
-		<li><a href="javascript:void(0)" onClick={() => func(props.title)}>{props.title}</a></li>
+		<li><a href="javascript:void(0)" onClick={() => props.displayCallback(props.title)}>{props.title}</a></li>
 	)
 }
 
@@ -123,7 +136,7 @@ function saveNote(title, note) {
 	});
 }
 
-function showNote(title, callback) {
+function loadNote(title, callback) {
 	requestApi('/api/decrypt/' + title, 'GET', {}, function(res) {
 		let text = res;
 		callback(title, text);
