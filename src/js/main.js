@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Router } from 'react-router'
+import routes from './routes'
+import createHistory from 'history/createBrowserHistory'
+
+
 // Port to communicate with python api. set it in conf file later
 const PORT_PYTHON = 52525;
 const URL = 'http://127.0.0.1:' + PORT_PYTHON;
@@ -49,7 +54,7 @@ function Welcome(props) {
 			<h1>Hello, {props.name}</h1>
 			<h2>Welcome on crypto-notes !</h2>
 			<label>Username </label>: <input className="text"/>
-			<br/> 
+			<br/>
 			<label>Password </label>: <input className="text"/>
 			<h2>Click here to begin : <button onClick={() => connectToApi(props.onConnect)}>CONNECT</button></h2>
 		</div>
@@ -80,7 +85,7 @@ class WriteNote extends React.Component {
   				<h1>Write a note here :</h1>
   				<label>Title</label> : <input className="text" value={this.state.title} onChange={this.handleInputChange} disabled={titleDisable}/>
   				<br/>
-  				<textarea id="note" value={this.state.text} rows="4" cols="50" 
+  				<textarea id="note" value={this.state.text} rows="4" cols="50"
   					placeholder="My bitcoin wallet" onChange={this.handleAreaChange}>
   				</textarea>
   				<br/>
@@ -171,7 +176,17 @@ function requestApi(route, method, body, callback) {
 	});
 }
 
+// ReactDOM.render(
+// 	<Main />,
+// 	document.getElementById('root')
+// );
+
+const customHistory = createHistory()
+
 ReactDOM.render(
-	<Main />,
+    	<Router history={customHistory}>
+            { routes }
+        </Router>
+    ,
 	document.getElementById('root')
 );
