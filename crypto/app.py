@@ -1,5 +1,5 @@
 import flask
-import flask_cors 
+import flask_cors
 import crypto
 import time
 import json
@@ -22,7 +22,25 @@ def limit_remot_addr():
 		abort(403)
 
 """
-Fetch private key (user own this key). 
+Return the homepage
+"""
+@app.route('/', methods=['GET'])
+def home():
+	with open('./index.html', 'rb') as home :
+		resp = getResponse(home.read(), 200)
+	return resp
+
+
+@app.route('/js/<string:fileName>', methods=['GET'])
+def js(fileName):
+	path = 'public/js/' + fileName
+	with open(path, 'rb') as js:
+		resp = getResponse(js.read(), 200)
+	return resp
+
+
+"""
+Fetch private key (user own this key).
 Later, this key should be crypted with a key stored in DB (we'll own this key)
 TODO : deco
 """
@@ -66,7 +84,7 @@ GET or POST ?
 @app.route('/api/encrypt', methods=['POST'])
 def encrypt():
 	#TODO : generate and stock this message IV
-	postData = flask.request.data.decode("utf-8") 
+	postData = flask.request.data.decode("utf-8")
 	postData = json.loads(postData)
 	title = postData['title']
 	msg = postData['note']
@@ -101,7 +119,7 @@ def storeMessage(cryptedMsg, fileName= None):
 	path = 'notes/' + fileName
 	os.makedirs(os.path.dirname(path), exist_ok=True)
 	with open(path, 'wb') as fileCrypted :
-		fileCrypted.write(cryptedMsg) 
+		fileCrypted.write(cryptedMsg)
 
 """
 Get response to send via API
