@@ -1,4 +1,8 @@
 private_key
+iv_file
+notes
+
+__pycache__
 
 node_modules
 npm-debug.log
