@@ -18,10 +18,10 @@ const URL = 'http://127.0.0.1:' + PORT_PYTHON;
 const store = createStore(noteApp)
 
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root')
 )
 
 

@@ -4,7 +4,6 @@ import { ConnectBox } from '../components'
 
 const mapStateToProps = (state) => {
     return {
-        name: state.user.username,
     }
 }
 

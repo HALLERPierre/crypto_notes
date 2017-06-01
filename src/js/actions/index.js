@@ -9,3 +9,5 @@ export function login(username, password) {
         }
     }
 }
+
+// requestApi('/api/connect', 'GET', {}, function(res) {
