@@ -12,10 +12,8 @@ export default {
         babel({exclude: 'node_modules/**'}),
         commonjs({
             namedExports: {
-    // left-hand side can be an absolute path, a path
-    // relative to the current directory, or the name
-    // of a module in node_modules
-            'node_modules/react-dom/index.js': [ 'ReactDOM' ]
+                'node_modules/react-dom/index.js': [ 'ReactDOM', 'render' ],
+                'node_modules/react/react.js': ['Children', 'Component', 'PropTypes', 'createElement'],
         }}),
         replace({
             'process.env.NODE_ENV': JSON.stringify('development')

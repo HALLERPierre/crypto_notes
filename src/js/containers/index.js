@@ -1,11 +1,26 @@
-import React from 'react'
+import { connect } from 'react-redux'
+import { login } from '../actions'
+import { ConnectBox } from '../components'
 
-function Connection(props) {
-    return (
-        <div className="Welcoming">
-            <h1>Hello, World</h1>
-        </div>
-    )
+const mapStateToProps = (state) => {
+    return {
+        name: state.user.username,
+    }
 }
 
-export { Connection }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        connect: (username, password) => {
+            dispatch(login(username, password))
+        }
+    }
+}
+
+const UserCard = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ConnectBox)
+
+export {
+    UserCard
+}
