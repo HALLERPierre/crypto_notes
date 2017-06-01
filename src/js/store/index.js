@@ -4,8 +4,8 @@ import Immutable from 'immutable'
 
 import thunk from 'redux-thunk'
 
-import reducers from '../reducers'
-import history from '../router/history'
+import { noteApp } from '../reducers'
+// import history from '../router/history'
 
 function getPreloadedState() {
     return {}
@@ -20,13 +20,7 @@ function getMiddleware() {
     return applyMiddleware(...middleware)
 }
 
-const composeEnhancers = (process.env.NODE_ENV !== 'production') &&
-global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-    global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-        serialize : {
-            immutable: Immutable,
-        }
-    }) : compose
+const composeEnhancers = compose
 
 const enhancer = composeEnhancers(
     getMiddleware(),
@@ -34,7 +28,7 @@ const enhancer = composeEnhancers(
 
 
 export const store = createStore(
-    reducers,
+    noteApp,
     getPreloadedState(),
     enhancer
 )

@@ -1,1 +1,3 @@
-export const LOG_IN = 'LOG_IN'
+export const REQUEST_LOGIN = 'REQUEST_LOGIN'
+export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
+export const FAIL_LOGIN = 'FAIL_LOGIN'

@@ -1,5 +1,5 @@
 import { login } from '../actions'
-import { LOG_IN } from '../constants'
+import { REQUEST_LOGIN, RECEIVE_LOGIN, FAIL_LOGIN } from '../constants'
 
 const initialState = {
     user: null
@@ -7,10 +7,10 @@ const initialState = {
 
 export function noteApp(state = initialState, action) {
     switch (action.type) {
-        case LOG_IN:
-            return Object.assign({}, state, {
-                user: action.payload
-            })
+        case REQUEST_LOGIN:
+        case RECEIVE_LOGIN:
+        case FAIL_LOGIN:
+            return Object.assign({}, state, action.payload)
             break
         default:
             return state
