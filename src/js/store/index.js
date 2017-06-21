@@ -5,7 +5,6 @@ import Immutable from 'immutable'
 import thunk from 'redux-thunk'
 
 import { noteApp } from '../reducers'
-// import history from '../router/history'
 
 function getPreloadedState() {
     return {}

@@ -1,6 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
 import { store } from './store'
 import { noteApp } from './reducers'
 import { App } from './components'
@@ -16,9 +15,7 @@ const URL = 'http://127.0.0.1:' + PORT_PYTHON;
 
 
 render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
+	<App store={store} />,
 	document.getElementById('root')
 )
 
