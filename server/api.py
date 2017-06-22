@@ -1,14 +1,13 @@
-import flask
-import flask_cors
+from utils import *
 import crypto
 import time
 import json
 import sys
 import codecs
 import os
+import flask
 
 app = flask.Flask(__name__)
-flask_cors.CORS(app)
 
 key = None
 connected = False
@@ -20,24 +19,6 @@ Limit connection to localhost
 def limit_remot_addr():
 	if flask.request.remote_addr != '127.0.0.1':
 		abort(403)
-
-"""
-Return the homepage
-"""
-@app.route('/', methods=['GET'])
-def home():
-	with open('./index.html', 'rb') as home :
-		resp = getResponse(home.read(), 200)
-	return resp
-
-
-@app.route('/js/<string:fileName>', methods=['GET'])
-def js(fileName):
-	path = 'public/js/' + fileName
-	with open(path, 'rb') as js:
-		resp = getResponse(js.read(), 200)
-	return resp
-
 
 """
 Fetch private key (user own this key).
@@ -120,17 +101,3 @@ def storeMessage(cryptedMsg, fileName= None):
 	os.makedirs(os.path.dirname(path), exist_ok=True)
 	with open(path, 'wb') as fileCrypted :
 		fileCrypted.write(cryptedMsg)
-
-"""
-Get response to send via API
-"""
-def getResponse(text, status_code):
-	resp = flask.Response(text)
-	resp.headers['Access-Control-Allow-Origin'] = '*'
-	resp.status_code = status_code
-	return resp
-
-
-if __name__ == '__main__':
-	#Set port in conf file
-	app.run(debug=True, port=52525)
