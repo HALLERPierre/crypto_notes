@@ -1,14 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import { render } from 'react-dom'
+import { store } from './store'
+import { noteApp } from './reducers'
+import { App } from './components'
 
-import { Router } from 'react-router'
-import routes from './routes'
-import createHistory from 'history/createBrowserHistory'
+// import { Router } from 'react-router'
+// import routes from './routes'
+// import createHistory from 'history/createBrowserHistory'
 
 
 // Port to communicate with python api. set it in conf file later
 const PORT_PYTHON = 52525;
 const URL = 'http://127.0.0.1:' + PORT_PYTHON;
+
+
+render(
+	<App store={store} />,
+	document.getElementById('root')
+)
+
+
 
 
 class Main extends React.Component {
@@ -181,12 +192,12 @@ function requestApi(route, method, body, callback) {
 // 	document.getElementById('root')
 // );
 
-const customHistory = createHistory()
-
-ReactDOM.render(
-    	<Router history={customHistory}>
-            { routes }
-        </Router>
-    ,
-	document.getElementById('root')
-);
+// const customHistory = createHistory()
+//
+// ReactDOM.render(
+//     	<Router history={customHistory}>
+//             { routes }
+//         </Router>
+//     ,
+// 	document.getElementById('root')
+// );

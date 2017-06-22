@@ -1,11 +1,7 @@
-import React from 'react'
+import Login from './Login'
+import Notes from './Notes'
 
-function Connection(props) {
-    return (
-        <div className="Welcoming">
-            <h1>Hello, World</h1>
-        </div>
-    )
+export {
+    Login,
+    Notes,
 }
-
-export { Connection }
