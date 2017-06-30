@@ -21,3 +21,7 @@ def js(fileName):
 	with open(path, 'rb') as js:
 		resp = getResponse(js.read(), 200)
 	return resp
+
+@app.errorhandler(404)
+def page_not_found(e):
+	return home()
