@@ -1,11 +1,9 @@
 import React from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
-import createHistory from 'history/createBrowserHistory'
+import { history } from '../store'
 import { ConnectedRouter } from 'react-router-redux'
 import {Login, Notes} from '../containers'
 import { connect } from 'react-redux'
-
-const history = createHistory()
 
 //Spread operator
 const PrivateRoute = ({ component: Component, connected,...rest }) => (

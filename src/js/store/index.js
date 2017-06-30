@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import { routerMiddleware, routerReducer } from 'react-router-redux'
-import Immutable from 'immutable'
+import createHistory from 'history/createBrowserHistory'
 
 import thunk from 'redux-thunk'
 
@@ -9,6 +9,8 @@ import { user } from '../reducers'
 function getPreloadedState() {
     return {}
 }
+
+export const history = createHistory()
 
 function getMiddleware() {
     let middleware = [

@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux'
+
 import { REQUEST_LOGIN, RECEIVE_LOGIN, FAIL_LOGIN } from '../constants'
 
 const requestLogin = () => {
@@ -30,13 +32,14 @@ const failLogin = () => {
     }
 }
 
-export const login = (username, password) => 
+export const login = (username, password) =>
     function(dispatch) {
         dispatch(requestLogin())
 
         return fetch('/api/connect')
             .then(() => dispatch(receiveLogin()))
             .catch(error => dispatch(failLogin(error.json())))
+            .then(() => dispatch(push('/')))
     }
 
 
