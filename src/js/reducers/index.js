@@ -2,10 +2,12 @@ import { login } from '../actions'
 import { REQUEST_LOGIN, RECEIVE_LOGIN, FAIL_LOGIN } from '../constants'
 
 const initialState = {
-    user: null
+    token: null,
+    connected: false,
+	fetching: false,
 }
 
-export function noteApp(state = initialState, action) {
+export function user(state = initialState, action) {
     switch (action.type) {
         case REQUEST_LOGIN:
         case RECEIVE_LOGIN:

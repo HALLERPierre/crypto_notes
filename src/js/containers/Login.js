@@ -4,6 +4,7 @@ import { ConnectBox } from '../components'
 
 const mapStateToProps = (state) => {
     return {
+    	disabled: state.user.fetching
     }
 }
 

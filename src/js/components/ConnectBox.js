@@ -23,7 +23,7 @@ class ConnectBox extends React.Component {
     			<label>Username </label>: <input className="text" value={this.state.user} onChange={updateUsername}/>
     			<br/>
     			<label>Password </label>: <input className="text" value={this.state.password} onChange={updatePassword}/>
-    			<h2>Click here to begin : <button onClick={() => this.props.connect(this.state.user, this.state.password)}>CONNECT</button></h2>
+    			<h2>Click here to begin : <button disabled={this.props.disabled} onClick={() => this.props.connect(this.state.user, this.state.password)}>CONNECT</button></h2>
     		</div>
         )
     }

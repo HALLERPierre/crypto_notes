@@ -28,7 +28,6 @@ def routes(app):
 	def connect():
 		global key
 		key = crypto.getPrivateKey()
-		print('Hello world!', file=sys.stderr)
 		if key:
 			resp = getResponse("Connection ok", 200)
 			connected = True

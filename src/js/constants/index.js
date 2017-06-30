@@ -1,3 +1,9 @@
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
 export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
 export const FAIL_LOGIN = 'FAIL_LOGIN'
+
+export const REQUEST_NOTES = 'REQUEST_NOTES'
+export const RECEIVED_NOTES = 'RECEIVED_NOTES'
+export const FAIL_FETCH_NOTES = 'FAIL_FETCH_NOTES'
+
+

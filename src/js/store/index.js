@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import thunk from 'redux-thunk'
 
-import { noteApp } from '../reducers'
+import { user } from '../reducers'
 
 function getPreloadedState() {
     return {}
@@ -19,16 +19,15 @@ function getMiddleware() {
     return applyMiddleware(...middleware)
 }
 
-const composeEnhancers = compose
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const enhancer = composeEnhancers(
     getMiddleware(),
 )
 
-
 export const store = createStore(
     combineReducers({
-        noteApp,
+        user,
         router: routerReducer
     }),
     getPreloadedState(),
