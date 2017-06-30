@@ -1,9 +1,9 @@
 import ConnectBox from './ConnectBox'
-import App from './App'
 import NotesList from './NotesList'
+import App from './App'
 
 export {
     ConnectBox,
-    App,
     NotesList,
+    App,
 }
