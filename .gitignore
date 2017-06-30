@@ -3,6 +3,7 @@ iv_file
 notes
 
 __pycache__
+*.pyc
 
 node_modules
 npm-debug.log
