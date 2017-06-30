@@ -11,7 +11,6 @@ export function noteApp(state = initialState, action) {
         case RECEIVE_LOGIN:
         case FAIL_LOGIN:
             return Object.assign({}, state, action.payload)
-            break
         default:
             return state
     }

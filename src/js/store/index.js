@@ -1,5 +1,5 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import { routerMiddleware } from 'react-router-redux'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
+import { routerMiddleware, routerReducer } from 'react-router-redux'
 import Immutable from 'immutable'
 
 import thunk from 'redux-thunk'
@@ -27,7 +27,10 @@ const enhancer = composeEnhancers(
 
 
 export const store = createStore(
-    noteApp,
+    combineReducers({
+        noteApp,
+        router: routerReducer
+    }),
     getPreloadedState(),
     enhancer
 )

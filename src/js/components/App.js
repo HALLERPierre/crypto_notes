@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
-import { Router, Route, Redirect } from 'react-router'
+import { Router, Route, Redirect, Switch } from 'react-router-dom'
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 
 import { Login, Notes } from '../containers'
-
 
 const history = createHistory()
 const Auth = {isAuthenticated: false}
@@ -26,11 +26,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 const App = ({ store }) => (
     <Provider store={store}>
-        <Router history={history}>
-            <PrivateRoute path="/" component={ Notes }>
-                <Route path="/login" component={ Login }/>
-            </PrivateRoute>
-        </Router>
+        <ConnectedRouter history={history}>
+            <Switch>
+                <PrivateRoute exact path="/" component={ Notes } />
+                <Route exact path="/login" component={ Login } />
+            </Switch>
+        </ConnectedRouter>
     </Provider>
 )
 
