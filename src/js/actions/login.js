@@ -36,7 +36,7 @@ export const login = (username, password) =>
 
         return fetch('/api/connect')
             .then(() => dispatch(receiveLogin()))
-            .catch(error => dispatch(failLogin(response.json())))
+            .catch(error => dispatch(failLogin(error.json())))
     }
 
 
