@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { Router, Route, Redirect } from 'react-router'
 import createHistory from 'history/createBrowserHistory'
@@ -7,7 +8,9 @@ import { Login, Notes } from '../containers'
 
 
 const history = createHistory()
+const Auth = {isAuthenticated: false}
 
+//Spread operator
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         Auth.isAuthenticated
@@ -24,8 +27,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const App = ({ store }) => (
     <Provider store={store}>
         <Router history={history}>
-            <PrivateRoute path="/" component={ Notes }/>
-            <Route path="/login" component={ Login }/>
+            <PrivateRoute path="/" component={ Notes }>
+                <Route path="/login" component={ Login }/>
+            </PrivateRoute>
         </Router>
     </Provider>
 )

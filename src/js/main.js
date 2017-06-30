@@ -19,7 +19,7 @@ render(
 	document.getElementById('root')
 )
 
-
+/*
 
 
 class Main extends React.Component {
@@ -185,7 +185,7 @@ function requestApi(route, method, body, callback) {
 	.catch(function(res) {
 		console.log(res);
 	});
-}
+}*/
 
 // ReactDOM.render(
 // 	<Main />,
