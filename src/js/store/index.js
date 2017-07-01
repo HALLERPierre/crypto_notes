@@ -4,7 +4,7 @@ import createHistory from 'history/createBrowserHistory'
 
 import thunk from 'redux-thunk'
 
-import { user } from '../reducers'
+import { user, notes } from '../reducers'
 
 function getPreloadedState() {
     return {}
@@ -30,6 +30,7 @@ const enhancer = composeEnhancers(
 export const store = createStore(
     combineReducers({
         user,
+        notes,
         router: routerReducer
     }),
     getPreloadedState(),

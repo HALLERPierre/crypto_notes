@@ -1,3 +1,7 @@
 import { login } from './login'
+import { fetchNotes } from './notes'
 
-export { login }
+export {
+    login,
+    fetchNotes
+}

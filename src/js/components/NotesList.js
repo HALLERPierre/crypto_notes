@@ -1,9 +1,17 @@
 import React from 'react'
 
-const NotesList = (props) => (
-	<div>
-		YOLO
-	</div>
-)
+class NotesList extends React.Component {
+	componentWillMount() {
+		this.props.fetchNotes()
+	}
+	render() {
+		let list = this.props.notes.map((note) => (<li>{note}</li>))
+		return (
+			<ul>
+				{list}
+			</ul>
+		)
+	}
+}
 
 export default NotesList

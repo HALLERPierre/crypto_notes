@@ -29,15 +29,12 @@ const failFetchNotes = (error) => {
     }
 }
 
-export function fetchNotes() {
-    return function(dispatch, getState) {
-        dispatch(requestLogin())
+export const fetchNotes = () =>
+    function(dispatch, getState) {
+        dispatch(requestNotes())
 
         return fetch('/api/getAllTitles')
-            .then((response) => dispatch(receiveNotes(response.json())))
-            .catch(response => response.json())
-            .then(error => dispatch(failLogin(error)))
+            .then(response => response.json())
+            .then(notes => dispatch(receiveNotes(notes)))
+            .catch(error => dispatch(failFetchNotes(error)))
     }
-}
-
-// requestApi('/api/connect', 'GET', {}, function(res) {

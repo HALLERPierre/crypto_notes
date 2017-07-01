@@ -41,6 +41,3 @@ export const login = (username, password) =>
             .catch(error => dispatch(failLogin(error.json())))
             .then(() => dispatch(push('/')))
     }
-
-
-// requestApi('/api/connect', 'GET', {}, function(res) {
