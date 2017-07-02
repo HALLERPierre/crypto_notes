@@ -6,7 +6,6 @@ class NotesList extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.notes);
 		let list = this.props.notes.map((note, index) => (<li key={index}>{note}</li>), '');
 		return (
 			<ul>
