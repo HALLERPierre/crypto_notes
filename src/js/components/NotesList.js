@@ -1,17 +1,19 @@
-import React from 'react'
+import React from 'react';
 
 class NotesList extends React.Component {
 	componentWillMount() {
-		this.props.fetchNotes()
+		this.props.fetchNotes();
 	}
+
 	render() {
-		let list = this.props.notes.map((note) => (<li>{note}</li>))
+		console.log(this.props.notes);
+		let list = this.props.notes.map((note, index) => (<li key={index}>{note}</li>), '');
 		return (
 			<ul>
 				{list}
 			</ul>
-		)
+		);
 	}
 }
 
-export default NotesList
+export default NotesList;
