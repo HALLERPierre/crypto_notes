@@ -1,11 +1,10 @@
-import React from 'react'
-import { Route, Redirect, Switch } from 'react-router-dom'
-import { history } from '../store'
-import { ConnectedRouter } from 'react-router-redux'
-import {Login, Notes} from '../containers'
-import { connect } from 'react-redux'
+import React from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import { history } from '../store';
+import { ConnectedRouter } from 'react-router-redux';
+import {Login, Notes} from '../containers';
+import { connect } from 'react-redux';
 
-//Spread operator
 const PrivateRoute = ({ component: Component, connected,...rest }) => (
     <Route {...rest} render={props => (
         connected
@@ -17,31 +16,45 @@ const PrivateRoute = ({ component: Component, connected,...rest }) => (
                 }}/>
             )
     )}/>
-)
+);
+
+const DefaultLayout = ({ ...props }) => (
+    <div className="DefaultLayout">
+        <header>Header</header>
+        {props.children}
+        <footer>Footer</footer>
+    </div>
+);
+
+const NotesLayout = ({ component: Component, ...props }) => (
+    <DefaultLayout {...props}>
+        <Notes />
+    </DefaultLayout>
+);
 
 const Routes = (props) => (
 	<ConnectedRouter history={history}>
    		<Switch>
-   		    <PrivateRoute exact path="/" component={ Notes } connected={props.connected} />
+   		    <PrivateRoute exact path="/" component={ NotesLayout } connected={props.connected} />
    		    <Route exact path="/login" component={ Login } />
    		</Switch>
 	</ConnectedRouter>
-)
+);
 
 const mapStateToProps = (state) => {
     return {
-    	connected: state.user.connected
-    }
-}
+    	connected: state.user.connected,
+    };
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
-    }
-}
+    };
+};
 
 const Router = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Routes)
+)(Routes);
 
-export default Router
+export default Router;
