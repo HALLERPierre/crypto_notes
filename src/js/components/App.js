@@ -1,17 +1,27 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Provider } from 'react-redux'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+import { history } from '../store';
 
-import Router from '../router/Router'
+import PrivateRoute from '../router/PrivateRoute';
+import NotesLayout from '../layout/Layout';
+import { Login } from '../containers';
 
 const App = ({ store }) => (
     <Provider store={store}>
-        <Router />
+        <ConnectedRouter history={history}>
+            <Switch>
+                <PrivateRoute exact path="/" component={ NotesLayout } />
+                <Route exact path="/login" component={ Login } />
+            </Switch>
+        </ConnectedRouter>
     </Provider>
-)
+);
 
 App.propTypes = {
     store: PropTypes.object.isRequired,
 }
 
-export default App
+export default App;
