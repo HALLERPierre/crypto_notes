@@ -1,43 +1,42 @@
-import { push } from 'react-router-redux'
-
-import { REQUEST_LOGIN, RECEIVE_LOGIN, FAIL_LOGIN } from '../constants'
+import { push } from "react-router-redux";
+import { REQUEST_LOGIN, RECEIVE_LOGIN, FAIL_LOGIN } from "../constants";
 
 const requestLogin = () => {
     return {
         type: REQUEST_LOGIN,
         payload: {
             fetching: true,
-            connected: false,
+            connected: false
         }
-    }
-}
+    };
+};
 
 const receiveLogin = () => {
     return {
         type: RECEIVE_LOGIN,
         payload: {
             fetching: false,
-            connected: true,
+            connected: true
         }
-    }
-}
+    };
+};
 
 const failLogin = () => {
     return {
         type: FAIL_LOGIN,
         payload: {
             fetching: false,
-            connected: false,
+            connected: false
         }
-    }
-}
+    };
+};
 
 export const login = (username, password) =>
     function(dispatch) {
-        dispatch(requestLogin())
+        dispatch(requestLogin());
 
-        return fetch('/api/connect')
+        return fetch("/api/connect")
             .then(() => dispatch(receiveLogin()))
             .catch(error => dispatch(failLogin(error.json())))
-            .then(() => dispatch(push('/')))
-    }
+            .then(() => dispatch(push("/")));
+    };
