@@ -1,44 +1,46 @@
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
-import { routerMiddleware, routerReducer } from 'react-router-redux'
-import createHistory from 'history/createBrowserHistory'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
+import thunk from 'redux-thunk';
+import createHistory from 'history/createBrowserHistory';
+import throttle from 'lodash.throttle';
 
-import thunk from 'redux-thunk'
+import { user, notes } from '../reducers';
+import { loadState, saveState } from './LocalStorage';
 
-import { user, notes } from '../reducers'
+export const history = createHistory();
 
-function getPreloadedState() {
-    return {}
-}
-
-export const history = createHistory()
-
-function getMiddleware() {
+const getMiddleware = () => {
     let middleware = [
         thunk,
         routerMiddleware(history)
-    ]
+    ];
 
-    return applyMiddleware(...middleware)
+    return applyMiddleware(...middleware);
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(
     getMiddleware(),
-)
+);
 
-export const store = createStore(
+const persistedState = loadState();
+const store = createStore(
     combineReducers({
         user,
         notes,
         router: routerReducer
     }),
-    getPreloadedState(),
+    persistedState,
     enhancer
-)
+);
 
-export const getState = store.getState
+store.subscribe(throttle(() => {
+    const state = store.getState();
+    saveState(state);
+}, 1000));
 
-export const dispatch = store.dispatch
 
-export default store
+export const getState = store.getState();
+export const dispatch = store.dispatch;
+export default store;

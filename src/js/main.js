@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { store } from './store'
+import store from './store'
 import { App } from './components'
 
 // import { Router } from 'react-router'
