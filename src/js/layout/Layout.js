@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Notes } from '../containers';
 
 const style = {
@@ -13,7 +14,8 @@ const style = {
         background: "#D7737A"
     },
     title: {
-        color: "#302D30"
+        color: "#302D30",
+        textDecoration: "none"
     },
     search: {
         border: "none",
@@ -55,7 +57,7 @@ const DefaultLayout = ({ ...props }) => (
 
 const HeaderLayout = ({ ...props }) => (
     <header style={{...style.container, ...style.header}}>
-        <h1 style={style.title}>Crypto notes</h1>
+        <h1><Link to="/" style={style.title}>Crypto notes</Link></h1>
         <form style={style.search} method="get">
             <input type="search" name="search" placeholder="Search" />
         </form>
@@ -64,7 +66,7 @@ const HeaderLayout = ({ ...props }) => (
 
 const NewNoteLayout = ({ ...props }) => (
     <div style={{...style.container, ...style.newNote}}>
-        <textarea style={style.takeNote} name="text" placeholder="Take a note..."></textarea>
+        <textarea style={style.takeNote} placeholder="Take a note..."></textarea>
         <button style={style.buttonAddNote}>Done</button>
     </div>
 );
